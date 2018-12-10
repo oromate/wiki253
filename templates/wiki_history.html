@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Wiki</title>
+	<style type="text/css">
+		body {
+			font-family: sans-serif;
+			width: 800px;
+			margin: 0 auto;
+			padding: 10px;
+		}
+
+		.error {
+			color: red;
+		}
+
+		label {
+			display: block;
+			font-size: 20px;
+		}
+
+		input[type=text] {
+			width: 400px;
+			font-size: 20px;
+			padding: 2px;
+		}
+
+		textarea {
+			width: 400px;
+			height: 200px;
+			font-size: 17px;
+			font-family: monospace;	
+			margin-top: 30px;	
+		}
+
+		input[type=submit] {
+			font-size: 24px;
+		}
+
+		hr {
+			margin: 20px auto;
+		}
+
+		.title-link {
+			text-decoration: none !important;
+			color: black !important;
+		}
+
+		.post-date {
+			position: absolute;
+			right: 0px;
+			bottom: 0px;
+			color: #999;
+		}
+
+		.cache-age {
+			position: fixed;
+			right: 240px;
+			bottom: 5px;
+			color: #999;
+		}
+
+		.login-signup {
+			position: fixed;
+			right: 240px;
+			top: 5px;
+			color: #999;
+		}
+
+		.login-signup-link {
+			text-decoration: none !important;
+			color: #999 !important;
+		}
+
+		.edit-link {
+			text-decoration: none !important;
+			color: #999 !important;
+		}
+
+		.history-link {
+			text-decoration: none !important;
+			color: #999 !important;
+			margin-right: 25px;
+		}
+
+		.post-body {
+			margin: 0;
+			font-size: 17px;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
+
+		.post-heading {
+    		position: relative;
+    		border-bottom: 3px solid #666;
+		}
+
+		.history-table {
+			margin-top: 30px;
+		}
+
+		tr:nth-child(even) {
+    		background-color: #EEE;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="login-signup">
+		{% if user == None %}
+			<a class="login-signup-link" href="login">login</a>
+			&nbsp;|&nbsp;
+		{% else %}
+			<a class="edit-link" href=
+			{% if wiki_name == "_frontpage" %}
+				"/_edit"
+			{% else %}
+				"/_edit/{{wiki_name}}"
+			{% endif %}
+			>edit</a>
+			&nbsp;|&nbsp;
+			<a class="history-link" href=
+			{% if wiki_name == "_frontpage" %}
+				"/_history"
+			{% else %}
+				"/_history/{{wiki_name}}"
+			{% endif %}
+			>history</a>
+			<a class="login-signup-link" href="">{{user}}</a>
+		{% endif %}
+		{% if user == None %}
+			<a class="login-signup-link" href="/signup">signup</a>
+		{% else %}
+			<a class="login-signup-link" href="/logout">(logout)</a>
+		{% endif %}
+	</div>
+	<table>
+		<div class = "history-table">
+		{% for wp in wiki_pages %}
+			<tr class="history-row">
+				<td>{{wp.created.strftime("%a %b %d %H:%M:%S %Y")}}</td>
+				<td>{{wp.content[:100]}}</td>
+				{% if wiki_name == "_frontpage" %}
+					<td><a class="login-signup-link" href="/?v={{wiki_pages|length-loop.index+1}}">view</a></td>
+					<td><a class="login-signup-link" href="/_edit?v={{wiki_pages|length-loop.index+1}}">edit</a></td>
+				{% else %}
+					<td><a class="login-signup-link" href="/{{wiki_name}}?v={{wiki_pages|length-loop.index+1}}">view</a></td>
+					<td><a class="login-signup-link" href="/_edit/{{wiki_name}}?v={{wiki_pages|length-loop.index+1}}">edit</a></td>
+				{% endif %}
+			</tr>
+		{% endfor %}
+		</div>
+</body>
+</html>

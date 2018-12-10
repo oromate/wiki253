@@ -1,0 +1,17 @@
+# front page: Welcome to the Final (menu: edit|history username (logout)) || (login|signup)
+# edit page: form content save
+# newurl && logged -> newpage
+# signup: username password verify email
+# history
+
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /.*
+  script: main.app
+
+libraries:
+- name: jinja2
+version: latest

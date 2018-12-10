@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Wiki</title>
+	<style type="text/css">
+		html {
+			height: 100%;
+		}
+
+		body {
+			font-family: sans-serif;
+			width: 800px;
+			margin: 0 auto;
+			padding: 10px;
+			height: 100%;
+		}
+
+		.error {
+			color: red;
+		}
+
+		label {
+			display: block;
+			font-size: 20px;
+		}
+
+		input[type=text] {
+			width: 800px;
+			font-size: 20px;
+			padding: 2px;
+		}
+
+		textarea {
+			width: 800px;
+			height: 400px;
+			font-size: 17px;
+			font-family: monospace;	
+			margin-top: 30px;	
+		}
+
+		input[type="submit"] {
+			font-size: 24px;
+		}
+
+		hr {
+			margin: 20px auto;
+		}
+
+		.wiki-body {
+			margin: 0;
+			font-size: 17px;
+		}
+
+		.login-signup {
+			position: fixed;
+			right: 240px;
+			top: 5px;
+			color: #999;
+		}
+
+		.login-signup-link {
+			text-decoration: none !important;
+			color: #999 !important;
+		}
+
+		.edit-link {
+			text-decoration: none !important;
+			color: #999 !important;
+		}
+
+		.history-link {
+			text-decoration: none !important;
+			color: #999 !important;
+			margin-right: 25px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="login-signup">
+			{% if wiki_name == "_frontpage" %}
+				<a class="edit-link" href="/">view</a>
+				&nbsp;|&nbsp;
+				<a class="history-link" href="/_history">history</a>
+			{% else %}
+				<a class="edit-link" href="/{{wiki_name}}">view</a>
+				&nbsp;|&nbsp;
+				<a class="history-link" href="/_history/{{wiki_name}}">history</a>
+			{% endif %}
+			<a class="login-signup-link" href="">{{user}}</a>
+			<a class="login-signup-link" href="/logout">(logout)</a>
+	</div>
+	<form method="post">
+		<input type="hidden" name="wiki_name" value = "{{wiki_name}}">
+		<label>
+			<textarea name="content">{{content}}</textarea>
+		</label>
+		<div class="error">{{error}}</div>
+		<input type="submit" value="Save">
+	</form>
+</body>
+</html>
